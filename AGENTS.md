@@ -7,7 +7,7 @@
 3. **快速发布**：自动发布到公众号和小红书
 
 ## 技术栈
-- Next.js 14+ (App Router)
+- Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS + shadcn/ui
 - SQLite (better-sqlite3)
