@@ -3,6 +3,7 @@
  *
  * Currently supports:
  * - dajiala.com: WeChat Official Account article collection
+ * - Xiaohongshu (Little Red Book): note search and content retrieval
  *
  * Follows the same error-class hierarchy and retry pattern used in {@link ./ai.ts}.
  */
