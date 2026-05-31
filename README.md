@@ -51,15 +51,24 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 ```
 src/
 ├── app/
+│   ├── favicon.ico
+│   ├── globals.css
 │   ├── layout.tsx          # Root layout with sidebar + Geist fonts
 │   ├── page.tsx            # Dashboard home page
-│   └── globals.css         # Tailwind + theme variables
+│   └── topic-insight/
+│       └── page.tsx        # Topic Insight page (search + results + analysis)
 ├── components/
 │   ├── sidebar.tsx         # Sidebar navigation (client component)
+│   ├── topic/
+│   │   ├── TopicAnalysisPanel.tsx  # AI analysis display panel
+│   │   ├── TopicResultsList.tsx    # Search results list
+│   │   ├── TopicSearchBar.tsx      # Search input with source filter
+│   │   └── types.ts        # Topic types, interfaces, mock data
 │   └── ui/
 │       ├── button.tsx      # shadcn/ui Button
 │       └── card.tsx        # shadcn/ui Card
 └── lib/
+    ├── ai.ts               # SiliconFlow AI wrapper (analyze + generate)
     ├── db.ts               # SQLite connection, migrations, schema
     └── utils.ts            # Tailwind merge utility (cn)
 ```
@@ -83,7 +92,8 @@ Content Factory is under active development. Current status:
 - [x] Sidebar navigation with module links
 - [x] Dashboard page with module cards and stats
 - [x] SQLite database layer with migration system
-- [ ] Topic Insight module — search, collect, and analyze trending topics
+- [x] Topic Insight page — search, results list, and AI analysis panel
+- [x] SiliconFlow AI integration — topic analysis and content generation
 - [ ] Content Creation module — AI-powered multi-platform content generation
 - [ ] Quick Publish module — one-click publishing to WeChat, Xiaohongshu, Twitter
 - [ ] API integrations (dajiala.com, Xiaohongshu, SiliconFlow AI)
