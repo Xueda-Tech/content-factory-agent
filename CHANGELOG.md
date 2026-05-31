@@ -33,6 +33,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `generateContent()` — platform-tailored content generation for WeChat, Xiaohongshu, and Twitter.
   - Automatic retry with exponential backoff, timeout handling, and JSON response validation.
   - Custom error hierarchy: `AIError`, `AIAPIError`, `AIResponseError`, `AIRequestError`.
+- POST `/api/topic/analyze` route handler — accepts collected content, returns structured AI topic analysis via SiliconFlow.
+- POST `/api/content/generate` route handler — accepts topic + platform + optional generation params, returns AI-generated content.
+- dajiala.com WeChat article collection client (`src/lib/api-clients.ts`) with:
+  - `searchArticles()` — keyword and account-based search with pagination and date filtering.
+  - `getArticleContent()` — full article retrieval by URL.
+  - Rate limiter (max 2 req/s), automatic retry with exponential backoff, timeout handling.
+  - Custom error hierarchy: `CollectionError`, `CollectionAPIError`.
+- Shared UI components:
+  - `LoadingSpinner` — configurable SVG spinner with size variants (sm/default/lg) and optional label.
+- `.env.example` — documents all required and optional environment variables with descriptions and links.
 
 ### Changed
 
