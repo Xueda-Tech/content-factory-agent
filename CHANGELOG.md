@@ -25,6 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lucide React icon library integration.
 - `marked` markdown parsing library (v18) — foundation for content rendering.
 - ESLint configuration with Next.js core-web-vitals and TypeScript rules.
+- Topic Insight page (`/topic-insight`) with search bar, results list, and AI analysis panel. Source filtering by platform (WeChat, Xiaohongshu, manual). Mock data for development.
+- Topic Insight UI components: `TopicSearchBar`, `TopicResultsList`, `TopicAnalysisPanel`.
+- Topic types and interfaces (`src/components/topic/types.ts`) with mock data for development.
+- SiliconFlow AI wrapper (`src/lib/ai.ts`) with:
+  - `analyzeTopic()` — structured topic analysis via SiliconFlow chat completions.
+  - `generateContent()` — platform-tailored content generation for WeChat, Xiaohongshu, and Twitter.
+  - Automatic retry with exponential backoff, timeout handling, and JSON response validation.
+  - Custom error hierarchy: `AIError`, `AIAPIError`, `AIResponseError`, `AIRequestError`.
 
 ### Changed
 
