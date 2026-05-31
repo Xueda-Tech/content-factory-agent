@@ -1,4 +1,5 @@
 import Database from "better-sqlite3";
+import fs from "fs";
 import path from "path";
 
 const DB_PATH = path.join(process.cwd(), "data", "content-factory.db");
@@ -13,7 +14,6 @@ export function getDb(): Database.Database {
   if (_db) return _db;
 
   // Ensure the data directory exists
-  const fs = require("fs") as typeof import("fs");
   const dir = path.dirname(DB_PATH);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
