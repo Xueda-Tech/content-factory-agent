@@ -13,6 +13,7 @@ Content Factory automates the content production pipeline: discover trending top
 | UI | [React 19](https://react.dev), [Tailwind CSS v4](https://tailwindcss.com), [shadcn/ui](https://ui.shadcn.com) (base-nova style) |
 | Database | SQLite via [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) |
 | Icons | [Lucide React](https://lucide.dev) |
+| Markdown | [marked](https://marked.js.org) (content parsing & rendering) |
 
 ## Getting Started
 
