@@ -30,6 +30,25 @@ cd content-factory-agent
 npm install
 ```
 
+### Environment Setup
+
+Copy the example environment file and fill in your API keys:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+
+| Variable | Description |
+|----------|-------------|
+| `SILICONFLOW_API_KEY` | API key for [SiliconFlow](https://cloud.siliconflow.cn/account/ak) — used for AI topic analysis and content generation |
+| `DAJIALA_API_KEY` | API key for [dajiala.com](https://www.dajiala.com) — used for WeChat article collection |
+| `WECHAT_APPID` | WeChat Official Account AppID — used for publishing via wx.limyai.com (can also be passed per-request) |
+| `XHS_API_KEY` | Xiaohongshu API key — used for publishing to Xiaohongshu |
+
+Optional variables are documented in `.env.example`.
+
 ### Development
 
 ```bash
@@ -98,7 +117,14 @@ src/
     ├── api-clients.ts              # dajiala.com WeChat article collection client
     ├── db.ts                       # SQLite connection, migrations, schema
     ├── publish.ts                  # Platform publishing clients
-    └── utils.ts                    # Tailwind merge utility (cn)
+    ├── utils.ts                    # Tailwind merge utility (cn)
+    ├── utils.test.ts               # Unit tests for cn() utility
+    └── __tests__/
+        └── db.test.ts              # Database module tests (migrations, schema)
+├── test/
+│   └── setup.ts                    # Vitest setup (jest-dom matchers)
+└── __tests__/
+    └── smoke.test.ts               # Smoke test for test infrastructure
 ```
 
 ### Database Schema
