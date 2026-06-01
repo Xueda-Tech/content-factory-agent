@@ -69,11 +69,17 @@ src/
 │       │   └── analyze/
 │       │       └── route.ts        # POST /api/topic/analyze — AI topic analysis
 │       ├── content/
-│       │   └── generate/
-│       │       └── route.ts        # POST /api/content/generate — AI content generation
+│       │   ├── generate/
+│       │   │   └── route.ts        # POST /api/content/generate — AI content generation
+│       │   └── list/
+│       │       └── route.ts        # GET /api/content/list — list all content pieces
 │       └── publish/
-│           └── wechat/
-│               └── route.ts        # POST /api/publish/wechat — WeChat publishing
+│           ├── wechat/
+│           │   └── route.ts        # POST /api/publish/wechat — WeChat publishing
+│           ├── xhs/
+│           │   └── route.ts        # POST /api/publish/xhs — Xiaohongshu publishing
+│           └── history/
+│               └── route.ts        # GET /api/publish/history — publish history with pagination
 ├── components/
 │   ├── sidebar.tsx                 # Sidebar navigation (client component)
 │   ├── topic/
