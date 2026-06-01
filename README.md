@@ -153,7 +153,8 @@ Content Factory is under active development. Current status:
 - [x] Vitest + React Testing Library test infrastructure
 - [x] WeChat publish page and API integration (wx.limyai.com)
 - [x] Publish status tracking with SQLite persistence
-- [ ] Quick Publish module — Xiaohongshu publishing endpoint
+- [x] Quick Publish module — Xiaohongshu publishing endpoint
+- [x] Environment setup documentation and .env.example alignment
 - [ ] Xiaohongshu data collection client
 - [ ] Real topic search API integration (currently mock-driven)
 - [ ] Dashboard stats wired to database
