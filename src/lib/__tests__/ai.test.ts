@@ -70,7 +70,7 @@ describe("AI error classes", () => {
 
   it("AIAPIError sets name, statusCode, responseBody, and cause", async () => {
     vi.resetModules();
-    const { AIAPIError } = await import("../ai");
+    const { AIError, AIAPIError } = await import("../ai");
     const cause = new Error("root");
     const err = new AIAPIError("api failed", 500, "Internal Server Error", cause);
 
