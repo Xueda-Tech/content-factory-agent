@@ -43,6 +43,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shared UI components:
   - `LoadingSpinner` — configurable SVG spinner with size variants (sm/default/lg) and optional label.
 - `.env.example` — documents all required and optional environment variables with descriptions and links.
+- Content Creation page (`/content-create`) with:
+  - Topic/brief input textarea with character count.
+  - Platform selector (WeChat, Xiaohongshu, Twitter) with visual cards.
+  - Generation options: word count slider (200–3000) and tone selector (Professional, Casual, Humorous).
+  - Generate button with loading spinner and disabled states.
+  - Output display panel with copy-to-clipboard support.
+  - Integration with POST `/api/content/generate` for AI-powered content generation.
+- MarkdownEditor component (`src/components/content/MarkdownEditor.tsx`) wrapping `@uiw/react-md-editor` with:
+  - Edit / Preview mode toggle with toolbar.
+  - Optional "Reset to original" action.
+  - Dynamic import to avoid SSR issues.
+  - Controlled component with `value` / `onChange` props.
+- Test infrastructure with Vitest and React Testing Library:
+  - Vitest configuration with jsdom environment.
+  - Test setup with `@testing-library/jest-dom` matchers.
+  - Smoke tests verifying infrastructure works.
 
 ### Changed
 
