@@ -4,6 +4,8 @@ AI-powered content creation and publishing platform for WeChat, Xiaohongshu, and
 
 Content Factory automates the content production pipeline: discover trending topics from Chinese social platforms, generate platform-tailored content with AI, and publish across multiple channels from a single dashboard.
 
+**English** | [中文](./README.zh-CN.md)
+
 ## Tech Stack
 
 | Layer | Technology |
