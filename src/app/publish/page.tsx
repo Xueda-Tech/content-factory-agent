@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Send, Loader2, CheckCircle, XCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ interface ContentPiece {
   title: string;
   platform: string;
   status: string;
+  body?: string;
 }
 
 interface PublishResult {
@@ -25,13 +26,45 @@ interface PublishResult {
   url?: string;
 }
 
+interface PublishHistoryEntry {
+  id: number;
+  content_id: number;
+  platform: string;
+  external_id: string | null;
+  url: string | null;
+  status: string;
+  response: string | null;
+  published_at: string;
+  title: string | null;
+}
+
 type Platform = "wechat" | "xiaohongshu";
 
-const STATUS_ICONS = {
+const STATUS_ICONS: Record<string, React.ReactNode> = {
   pending: <Clock className="size-4 text-yellow-500" />,
   success: <CheckCircle className="size-4 text-green-500" />,
   failed: <XCircle className="size-4 text-red-500" />,
 };
+
+function formatRelativeTime(dateStr: string): string {
+  try {
+    const date = new Date(dateStr + "Z"); // SQLite stores UTC
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHr = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHr / 24);
+
+    if (diffSec < 60) return "just now";
+    if (diffMin < 60) return `${diffMin}m ago`;
+    if (diffHr < 24) return `${diffHr}h ago`;
+    if (diffDay < 7) return `${diffDay}d ago`;
+    return date.toLocaleDateString();
+  } catch {
+    return dateStr;
+  }
+}
 
 export default function PublishPage() {
   const [contents, setContents] = useState<ContentPiece[]>([]);
@@ -40,6 +73,8 @@ export default function PublishPage() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishResult, setPublishResult] = useState<PublishResult | null>(null);
   const [isLoadingContent, setIsLoadingContent] = useState(true);
+  const [publishHistory, setPublishHistory] = useState<PublishHistoryEntry[]>([]);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true);
 
   useEffect(() => {
     async function fetchContents() {
@@ -58,6 +93,32 @@ export default function PublishPage() {
     fetchContents();
   }, []);
 
+  // Use a ref so the refresh button can trigger re-fetch without re-render loops
+  const fetchHistoryRef = useRef<() => Promise<void>>(async () => {});
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadHistory() {
+      try {
+        setIsLoadingHistory(true);
+        const response = await fetch("/api/publish/history?limit=10");
+        if (response.ok && !cancelled) {
+          const data = await response.json();
+          setPublishHistory(data.history ?? []);
+        }
+      } catch {
+        // Silently handle
+      } finally {
+        if (!cancelled) setIsLoadingHistory(false);
+      }
+    }
+    loadHistory();
+    fetchHistoryRef.current = loadHistory;
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const handlePublish = async () => {
     if (!selectedContentId) return;
 
@@ -66,7 +127,7 @@ export default function PublishPage() {
 
     try {
       const selected = contents.find(
-        (c) => String(c.id) === selectedContentId
+        (c) => String(c.id) === selectedContentId,
       );
       if (!selected) {
         setPublishResult({
@@ -86,14 +147,14 @@ export default function PublishPage() {
           ? {
               contentId: selected.id,
               title: selected.title,
-              content: "", // Content body will be fetched server-side
+              content: "", // Server will look up content by contentId
               contentFormat: "markdown",
               articleType: "news",
             }
           : {
               contentId: selected.id,
               title: selected.title,
-              content: "",
+              content: "", // Server will look up content by contentId
               images: [],
             };
 
@@ -112,6 +173,8 @@ export default function PublishPage() {
           externalId: data.externalId,
           url: data.url,
         });
+        // Refresh history after successful publish
+        fetchHistoryRef.current();
       } else {
         setPublishResult({
           success: false,
@@ -271,18 +334,101 @@ export default function PublishPage() {
         </Card>
       )}
 
-      {/* Publish history placeholder */}
+      {/* Publish history */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Publishes</CardTitle>
-          <CardDescription>
-            History of your recent publishing attempts.
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Recent Publishes</CardTitle>
+              <CardDescription>
+                History of your recent publishing attempts.
+              </CardDescription>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => fetchHistoryRef.current()}
+              disabled={isLoadingHistory}
+            >
+              {isLoadingHistory ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                "Refresh"
+              )}
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Publish history will appear here after your first publish.
-          </p>
+          {isLoadingHistory ? (
+            <div className="flex items-center justify-center py-6">
+              <Loader2 className="size-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : publishHistory.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No publish history yet. Publish your first content above.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {publishHistory.map((entry) => (
+                <div
+                  key={entry.id}
+                  className="flex items-start gap-3 rounded-lg border p-3 text-sm"
+                >
+                  <div className="mt-0.5">
+                    {STATUS_ICONS[entry.status] ?? (
+                      <Clock className="size-4 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-medium">
+                        {entry.title ?? `Content #${entry.content_id}`}
+                      </p>
+                      <span className="text-xs text-muted-foreground">
+                        {formatRelativeTime(entry.published_at)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                          entry.platform === "wechat"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                            : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                        }`}
+                      >
+                        {entry.platform === "wechat"
+                          ? "WeChat"
+                          : entry.platform === "xiaohongshu"
+                            ? "XHS"
+                            : entry.platform}
+                      </span>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                          entry.status === "success"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                            : entry.status === "failed"
+                              ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                              : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                        }`}
+                      >
+                        {entry.status}
+                      </span>
+                    </div>
+                    {entry.url && (
+                      <a
+                        href={entry.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-blue-600 hover:underline dark:text-blue-400"
+                      >
+                        View published content
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
