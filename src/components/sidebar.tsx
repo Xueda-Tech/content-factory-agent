@@ -7,7 +7,6 @@ import {
   Lightbulb,
   PenSquare,
   Send,
-  Settings,
   Factory,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,9 +24,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Quick Publish", href: "/publish", icon: Send },
 ];
 
-const BOTTOM_ITEMS: NavItem[] = [
-  { label: "Settings", href: "/settings", icon: Settings },
-];
+const BOTTOM_ITEMS: NavItem[] = [];
 
 function NavLink({ item, active }: { item: NavItem; active: boolean }) {
   return (
