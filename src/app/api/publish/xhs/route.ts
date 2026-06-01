@@ -1,26 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  publishToWeChat,
-  PublishError,
-  PublishAPIError,
-} from "@/lib/api-clients";
-import { getContentById } from "@/lib/publish";
+  publishToXhs,
+  getContentById,
+  XhsPublishError,
+  XhsPublishAPIError,
+} from "@/lib/publish";
 import { getDb } from "@/lib/db";
 
-interface PublishRequestBody {
+interface PublishXhsRequestBody {
   contentId?: unknown;
-  wechatAppid?: unknown;
   title?: unknown;
   content?: unknown;
-  contentFormat?: unknown;
-  articleType?: unknown;
+  images?: unknown;
 }
 
 export async function POST(request: NextRequest) {
-  let body: PublishRequestBody;
+  let body: PublishXhsRequestBody;
 
   try {
-    body = (await request.json()) as PublishRequestBody;
+    body = (await request.json()) as PublishXhsRequestBody;
   } catch {
     return NextResponse.json(
       { error: "Invalid JSON body" },
@@ -28,16 +26,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const {
-    contentId,
-    wechatAppid,
-    title,
-    content,
-    contentFormat,
-    articleType,
-  } = body;
+  const { contentId, title, content, images } = body;
 
-  // Validate required fields
+  // Validate title
   if (typeof title !== "string" || title.trim().length === 0) {
     return NextResponse.json(
       { error: "title must be a non-empty string" },
@@ -47,11 +38,16 @@ export async function POST(request: NextRequest) {
 
   // If content is empty or not provided, try to look it up by contentId
   let resolvedContent = typeof content === "string" ? content : "";
+  let resolvedTitle = title.trim();
 
   if (!resolvedContent.trim() && typeof contentId === "number") {
     const contentPiece = getContentById(contentId);
     if (contentPiece) {
       resolvedContent = contentPiece.body ?? "";
+      // Use the stored title if the provided title is generic
+      if (contentPiece.title && resolvedTitle === contentPiece.title) {
+        resolvedTitle = contentPiece.title;
+      }
     }
   }
 
@@ -65,6 +61,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Validate images
+  const resolvedImages = Array.isArray(images)
+    ? (images as unknown[]).filter((i): i is string => typeof i === "string")
+    : [];
+
   const db = getDb();
   let publishHistoryId: number | null = null;
 
@@ -74,20 +75,18 @@ export async function POST(request: NextRequest) {
       const result = db
         .prepare(
           `INSERT INTO publish_history (content_id, platform, status)
-           VALUES (?, 'wechat', 'pending')`
+           VALUES (?, 'xiaohongshu', 'pending')`,
         )
         .run(contentId);
       publishHistoryId = Number(result.lastInsertRowid);
     }
 
-    // Call the WeChat publish API
-    const publishResult = await publishToWeChat({
-      wechatAppid: typeof wechatAppid === "string" ? wechatAppid : undefined,
-      title: title.trim(),
+    // Call the XHS publish API
+    const publishResult = await publishToXhs({
+      title: resolvedTitle,
       content: resolvedContent,
-      contentFormat:
-        typeof contentFormat === "string" ? contentFormat : "markdown",
-      articleType: typeof articleType === "string" ? articleType : "news",
+      images: resolvedImages,
+      contentId: typeof contentId === "number" ? contentId : undefined,
     });
 
     // Update publish history with success
@@ -98,7 +97,7 @@ export async function POST(request: NextRequest) {
              external_id = ?,
              url = ?,
              response = ?
-         WHERE id = ?`
+         WHERE id = ?`,
       ).run(
         publishResult.externalId ?? null,
         publishResult.url ?? null,
@@ -124,17 +123,17 @@ export async function POST(request: NextRequest) {
         `UPDATE publish_history
          SET status = 'failed',
              response = ?
-         WHERE id = ?`
+         WHERE id = ?`,
       ).run(JSON.stringify({ error: errorMessage }), publishHistoryId);
     }
 
-    if (err instanceof PublishAPIError) {
+    if (err instanceof XhsPublishAPIError) {
       return NextResponse.json(
         { error: err.message },
         { status: 502, headers: { "Content-Type": "application/json" } },
       );
     }
-    if (err instanceof PublishError) {
+    if (err instanceof XhsPublishError) {
       return NextResponse.json(
         { error: err.message },
         { status: 400, headers: { "Content-Type": "application/json" } },
