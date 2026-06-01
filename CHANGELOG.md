@@ -43,6 +43,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Shared UI components:
   - `LoadingSpinner` — configurable SVG spinner with size variants (sm/default/lg) and optional label.
 - `.env.example` — documents all required and optional environment variables with descriptions and links.
+- Content Creation page (`/content-create`) with topic input panel, content type selector (WeChat / Xiaohongshu / Twitter), generation button, and output display area.
+- Vitest + React Testing Library test infrastructure with jsdom environment, setup file, and smoke tests.
+- Quick Publish page (`/publish`) with:
+  - Content selector dropdown, platform toggle (WeChat / Xiaohongshu), publish button, and result status card.
+  - Publish history placeholder section.
+- POST `/api/publish/wechat` route handler — validates input, logs to `publish_history` table, calls `publishToWeChat`, returns structured JSON with external ID and URL.
+- wx.limyai.com WeChat publish client (`src/lib/api-clients.ts`) with:
+  - `publishToWeChat()` — article publishing with configurable appid, title, content, format, and article type.
+  - Timeout handling and structured error responses.
+  - Custom error hierarchy: `PublishError`, `PublishAPIError`.
 
 ### Changed
 
