@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import {
   PenSquare,
   Sparkles,
@@ -19,7 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MarkdownEditor } from "@/components/content/MarkdownEditor";
 
 // Types
 type Platform = "wechat" | "xiaohongshu" | "twitter";

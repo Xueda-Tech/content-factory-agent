@@ -107,7 +107,7 @@ describe("db module", () => {
 
   it("closeDb() closes the connection and a subsequent getDb() reopens", async () => {
     const { getDb, closeDb } = await import("../db");
-    const db1 = getDb();
+    getDb();
     closeDb();
 
     // After close, a fresh call should succeed
