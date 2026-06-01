@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "/usr/bin/node" "/home/ubuntu/wanman.dev/packages/cli/dist/index.js" "$@"

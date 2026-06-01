@@ -4,6 +4,7 @@ import {
   AIError,
   AIAPIError,
   AIRequestError,
+  AIResponseError,
 } from "@/lib/ai";
 
 export async function POST(request: NextRequest) {
@@ -41,6 +42,12 @@ export async function POST(request: NextRequest) {
       );
     }
     if (err instanceof AIAPIError) {
+      return NextResponse.json(
+        { error: err.message },
+        { status: 502, headers: { "Content-Type": "application/json" } },
+      );
+    }
+    if (err instanceof AIResponseError) {
       return NextResponse.json(
         { error: err.message },
         { status: 502, headers: { "Content-Type": "application/json" } },
