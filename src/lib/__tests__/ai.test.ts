@@ -274,12 +274,12 @@ describe("analyzeTopic", () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it("retries on 5xx and then throws AIAPIError", async () => {
+  it("retries on 5xx and then throws AIRequestError", async () => {
     vi.stubEnv("SILICONFLOW_API_KEY", "test-key");
     const failingFetch = mockFetchResolved("Server Error", 500);
     vi.stubGlobal("fetch", failingFetch);
 
-    const { analyzeTopic, AIAPIError } = await import("../ai");
+    const { analyzeTopic, AIRequestError } = await import("../ai");
 
     const promise = analyzeTopic("some content");
 
@@ -287,7 +287,8 @@ describe("analyzeTopic", () => {
     await vi.advanceTimersByTimeAsync(1000);
     await vi.advanceTimersByTimeAsync(2000);
 
-    await expect(promise).rejects.toThrow(AIAPIError);
+    await expect(promise).rejects.toThrow(AIRequestError);
+    await expect(promise).rejects.toThrow("Request failed after 3 attempts");
     // 3 attempts total: initial + 2 retries
     expect(failingFetch).toHaveBeenCalledTimes(3);
   });
@@ -523,18 +524,19 @@ describe("generateContent", () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it("retries on 5xx and then throws AIAPIError", async () => {
+  it("retries on 5xx and then throws AIRequestError", async () => {
     vi.stubEnv("SILICONFLOW_API_KEY", "test-key");
     vi.stubGlobal("fetch", mockFetchResolved("Server Error", 502));
 
-    const { generateContent, AIAPIError } = await import("../ai");
+    const { generateContent, AIRequestError } = await import("../ai");
 
     const promise = generateContent("topic", "wechat");
 
     await vi.advanceTimersByTimeAsync(1000);
     await vi.advanceTimersByTimeAsync(2000);
 
-    await expect(promise).rejects.toThrow(AIAPIError);
+    await expect(promise).rejects.toThrow(AIRequestError);
+    await expect(promise).rejects.toThrow("Request failed after 3 attempts");
     expect(fetch).toHaveBeenCalledTimes(3);
   });
 

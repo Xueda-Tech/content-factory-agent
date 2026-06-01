@@ -190,6 +190,11 @@ async function chatCompletion(messages: ChatMessage[]): Promise<string> {
         throw err;
       }
 
+      // Don't retry on response parsing errors -- the response shape won't change.
+      if (err instanceof AIResponseError) {
+        throw err;
+      }
+
       // AbortError means timeout
       if (err instanceof DOMException && err.name === "AbortError") {
         lastError = new AIRequestError("Request timed out", err);

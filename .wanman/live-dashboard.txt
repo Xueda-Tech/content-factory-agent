@@ -1,7 +1,7 @@
 
 ────────────────────────────────────────────────────────────────────────────────
   wanman run — takeover: content-factory-agent
-  ⏱ 9m46s │ Loop 2/2
+  ⏱ 9m46s │ Loop 1/1
 ────────────────────────────────────────────────────────────────────────────────
   Agents
     ● ceo          running
@@ -54,16 +54,16 @@
     ── 38 done, 1 active, 0 waiting ──
 
   Logs
-    14:10:53 supervisor     rpc
-    14:10:53 supervisor     rpc
-    14:10:53 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:08 supervisor     rpc
-    14:11:19 agent-process  tool_result (ceo)
+    15:05:04 agent-process  assistant_text (ceo)
+    15:05:06 agent-process  tool_call (ceo, tool:Bash)
+    15:05:13 supervisor     rpc
+    15:05:13 supervisor     rpc
+    15:05:13 supervisor     rpc
+    15:05:13 supervisor     rpc
+    15:05:13 supervisor     rpc
+    15:05:13 supervisor     rpc
+    15:05:18 agent-process  tool_result (ceo)
+    15:05:26 agent-process  tool_call (ceo, tool:Bash)
 
 ────────────────────────────────────────────────────────────────────────────────
   Ctrl+C to stop
