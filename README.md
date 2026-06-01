@@ -45,6 +45,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 | `npm run build` | Production build |
 | `npm start` | Start production server |
 | `npm run lint` | Run ESLint |
+| `npm test` | Run tests (Vitest) |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage report |
 
 ## Project Structure
 
