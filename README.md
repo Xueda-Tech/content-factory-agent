@@ -116,19 +116,25 @@ Content Factory is under active development. Current status:
 - [x] SQLite database layer with migration system
 - [x] Topic Insight page — search, results list, and AI analysis panel
 - [x] SiliconFlow AI integration — topic analysis and content generation
-- [ ] Content Creation module — AI-powered multi-platform content generation
-- [ ] Quick Publish module — one-click publishing to WeChat, Xiaohongshu, Twitter
-- [ ] API integrations (dajiala.com, Xiaohongshu, SiliconFlow AI)
-- [ ] Markdown editor for content editing
+- [x] Content Creation module — AI-powered multi-platform content generation
+- [x] Markdown editor for content editing
+- [x] Vitest + React Testing Library test infrastructure
+- [x] WeChat publish page and API integration (wx.limyai.com)
+- [x] Publish status tracking with SQLite persistence
+- [ ] Quick Publish module — Xiaohongshu publishing endpoint
+- [ ] Xiaohongshu data collection client
+- [ ] Real topic search API integration (currently mock-driven)
+- [ ] Dashboard stats wired to database
+- [ ] Comprehensive test coverage for lib, API routes, and components
 
-## API Integrations (Planned)
+## API Integrations
 
-| Service | Purpose |
-|---------|---------|
-| [dajiala.com](https://www.dajiala.com) | WeChat article collection |
-| Xiaohongshu API | Xiaohongshu data collection |
-| [SiliconFlow](https://siliconflow.cn) | AI model for topic analysis and content generation |
-| [wx.limyai.com](https://wx.limyai.com) | WeChat Official Account publishing |
+| Service | Purpose | Status |
+|---------|---------|--------|
+| [dajiala.com](https://www.dajiala.com) | WeChat article collection | ✅ Implemented |
+| [SiliconFlow](https://siliconflow.cn) | AI model for topic analysis and content generation | ✅ Implemented |
+| [wx.limyai.com](https://wx.limyai.com) | WeChat Official Account publishing | ✅ Implemented |
+| Xiaohongshu API | Xiaohongshu data collection and publishing | 🔲 Planned |
 
 ## License
 
