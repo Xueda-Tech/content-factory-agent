@@ -56,10 +56,10 @@ function formatRelativeTime(dateStr: string): string {
     const diffHr = Math.floor(diffMin / 60);
     const diffDay = Math.floor(diffHr / 24);
 
-    if (diffSec < 60) return "just now";
-    if (diffMin < 60) return `${diffMin}m ago`;
-    if (diffHr < 24) return `${diffHr}h ago`;
-    if (diffDay < 7) return `${diffDay}d ago`;
+    if (diffSec < 60) return "刚刚";
+    if (diffMin < 60) return `${diffMin} 分钟前`;
+    if (diffHr < 24) return `${diffHr} 小时前`;
+    if (diffDay < 7) return `${diffDay} 天前`;
     return date.toLocaleDateString();
   } catch {
     return dateStr;
@@ -132,7 +132,7 @@ export default function PublishPage() {
       if (!selected) {
         setPublishResult({
           success: false,
-          message: "Selected content not found",
+          message: "未找到所选内容",
         });
         return;
       }
@@ -169,7 +169,7 @@ export default function PublishPage() {
       if (response.ok) {
         setPublishResult({
           success: true,
-          message: "Published successfully!",
+          message: "发布成功！",
           externalId: data.externalId,
           url: data.url,
         });
@@ -178,13 +178,13 @@ export default function PublishPage() {
       } else {
         setPublishResult({
           success: false,
-          message: data.error ?? "Publishing failed",
+          message: data.error ?? "发布失败",
         });
       }
     } catch {
       setPublishResult({
         success: false,
-        message: "Network error — please try again",
+          message: "网络错误，请重试",
       });
     } finally {
       setIsPublishing(false);
@@ -197,19 +197,19 @@ export default function PublishPage() {
       <div>
         <div className="flex items-center gap-2">
           <Send className="size-5 text-blue-500" />
-          <h1 className="text-2xl font-bold tracking-tight">Quick Publish</h1>
+          <h1 className="text-2xl font-bold tracking-tight">快速发布</h1>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Publish your content to WeChat or Xiaohongshu with one click.
+          一键将内容发布到微信公众号或小红书。
         </p>
       </div>
 
       {/* Publish form */}
       <Card>
         <CardHeader>
-          <CardTitle>Publish Content</CardTitle>
+          <CardTitle>发布内容</CardTitle>
           <CardDescription>
-            Select a content piece and choose a platform to publish.
+            选择一篇内容和目标平台进行发布。
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -219,7 +219,7 @@ export default function PublishPage() {
               htmlFor="content-select"
               className="text-sm font-medium leading-none"
             >
-              Content
+              内容
             </label>
             <select
               id="content-select"
@@ -229,10 +229,10 @@ export default function PublishPage() {
             >
               <option value="">
                 {isLoadingContent
-                  ? "Loading content..."
+                  ? "加载中..."
                   : contents.length === 0
-                    ? "No content available"
-                    : "Select content to publish"}
+                    ? "暂无可用内容"
+                    : "选择要发布的内容"}
               </option>
               {contents.map((c) => (
                 <option key={c.id} value={String(c.id)}>
@@ -244,7 +244,7 @@ export default function PublishPage() {
 
           {/* Platform selector */}
           <div className="space-y-2">
-            <label className="text-sm font-medium leading-none">Platform</label>
+            <label className="text-sm font-medium leading-none">平台</label>
             <div className="flex gap-3">
               <button
                 type="button"
@@ -280,12 +280,12 @@ export default function PublishPage() {
             {isPublishing ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                Publishing...
+                发布中...
               </>
             ) : (
               <>
                 <Send className="size-4" />
-                Publish Now
+                立即发布
               </>
             )}
           </Button>
@@ -309,7 +309,7 @@ export default function PublishPage() {
                 <XCircle className="size-5 text-red-500" />
               )}
               <CardTitle>
-                {publishResult.success ? "Published" : "Failed"}
+                {publishResult.success ? "发布成功" : "发布失败"}
               </CardTitle>
             </div>
           </CardHeader>
@@ -327,7 +327,7 @@ export default function PublishPage() {
             )}
             {publishResult.externalId && (
               <p className="text-xs text-muted-foreground">
-                External ID: {publishResult.externalId}
+                外部 ID: {publishResult.externalId}
               </p>
             )}
           </CardContent>
@@ -339,9 +339,9 @@ export default function PublishPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Recent Publishes</CardTitle>
+              <CardTitle>发布历史</CardTitle>
               <CardDescription>
-                History of your recent publishing attempts.
+                最近的发布记录。
               </CardDescription>
             </div>
             <Button
@@ -353,7 +353,7 @@ export default function PublishPage() {
               {isLoadingHistory ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
-                "Refresh"
+                "刷新"
               )}
             </Button>
           </div>
@@ -365,7 +365,7 @@ export default function PublishPage() {
             </div>
           ) : publishHistory.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No publish history yet. Publish your first content above.
+              暂无发布记录，请在上方发布第一篇内容。
             </p>
           ) : (
             <div className="space-y-3">
@@ -421,7 +421,7 @@ export default function PublishPage() {
                         rel="noopener noreferrer"
                         className="text-xs text-blue-600 hover:underline dark:text-blue-400"
                       >
-                        View published content
+                        查看发布内容
                       </a>
                     )}
                   </div>

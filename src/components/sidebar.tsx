@@ -18,10 +18,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", href: "/", icon: LayoutDashboard },
-  { label: "Topic Insight", href: "/topic-insight", icon: Lightbulb },
-  { label: "Content Creation", href: "/content-create", icon: PenSquare },
-  { label: "Quick Publish", href: "/publish", icon: Send },
+  { label: "控制面板", href: "/", icon: LayoutDashboard },
+  { label: "话题洞察", href: "/topic-insight", icon: Lightbulb },
+  { label: "内容创作", href: "/content-create", icon: PenSquare },
+  { label: "快速发布", href: "/publish", icon: Send },
 ];
 
 const BOTTOM_ITEMS: NavItem[] = [];
@@ -57,7 +57,7 @@ export function Sidebar() {
       <div className="flex items-center gap-2.5 border-b border-sidebar-border px-4 py-4">
         <Factory className="size-5 text-sidebar-primary" />
         <span className="text-sm font-bold tracking-tight text-sidebar-foreground">
-          Content Factory
+          内容工厂
         </span>
       </div>
 

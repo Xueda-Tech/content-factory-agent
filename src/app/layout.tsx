@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Content Factory",
-    template: "%s | Content Factory",
+    default: "内容工厂",
+    template: "%s | 内容工厂",
   },
   description:
-    "AI-powered content creation and publishing platform for WeChat, Xiaohongshu, and Twitter.",
+    "AI 驱动的多平台内容创作与发布系统，支持微信公众号、小红书和 Twitter。",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex h-full overflow-hidden bg-background font-sans text-foreground">

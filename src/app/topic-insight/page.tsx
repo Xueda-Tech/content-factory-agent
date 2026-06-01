@@ -35,11 +35,10 @@ export default function TopicInsightPage() {
       <div>
         <div className="flex items-center gap-2">
           <Lightbulb className="size-5 text-amber-500" />
-          <h1 className="text-2xl font-bold tracking-tight">Topic Insight</h1>
+          <h1 className="text-2xl font-bold tracking-tight">话题洞察</h1>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Discover trending topics from WeChat and Xiaohongshu. Get AI-powered
-          analysis and content recommendations.
+          从微信和小红书发现热点话题，获取 AI 分析与内容推荐。
         </p>
       </div>
 

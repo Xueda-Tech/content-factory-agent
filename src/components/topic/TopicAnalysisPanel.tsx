@@ -47,11 +47,10 @@ export function TopicAnalysisPanel({ analysis }: TopicAnalysisPanelProps) {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Sparkles className="size-4 text-muted-foreground" />
-            <CardTitle className="text-sm">AI Analysis</CardTitle>
+            <CardTitle className="text-sm">AI 分析</CardTitle>
           </div>
           <CardDescription className="text-xs">
-            Select a topic result to view AI-powered analysis and
-            recommendations.
+            选择一条话题结果，查看 AI 分析与推荐。
           </CardDescription>
         </CardHeader>
       </Card>
@@ -63,7 +62,7 @@ export function TopicAnalysisPanel({ analysis }: TopicAnalysisPanelProps) {
       <CardHeader>
         <div className="flex items-center gap-2">
           <Sparkles className="size-4 text-amber-500" />
-          <CardTitle className="text-sm">AI Analysis</CardTitle>
+            <CardTitle className="text-sm">AI 分析</CardTitle>
         </div>
         <CardDescription className="text-xs leading-relaxed">
           {analysis.summary}
@@ -72,7 +71,7 @@ export function TopicAnalysisPanel({ analysis }: TopicAnalysisPanelProps) {
 
       <CardContent className="space-y-5">
         {/* Key Insights */}
-        <AnalysisSection icon={Lightbulb} title="Key Insights">
+        <AnalysisSection icon={Lightbulb} title="核心洞察">
           <ul className="space-y-2">
             {analysis.keyInsights.map((insight, i) => (
               <li key={i} className="flex items-start gap-2 text-xs">
@@ -84,7 +83,7 @@ export function TopicAnalysisPanel({ analysis }: TopicAnalysisPanelProps) {
         </AnalysisSection>
 
         {/* Content Angles */}
-        <AnalysisSection icon={Compass} title="Content Angles">
+        <AnalysisSection icon={Compass} title="内容角度">
           <ul className="space-y-2">
             {analysis.contentAngles.map((angle, i) => (
               <li key={i} className="flex items-start gap-2 text-xs">
@@ -96,7 +95,7 @@ export function TopicAnalysisPanel({ analysis }: TopicAnalysisPanelProps) {
         </AnalysisSection>
 
         {/* Recommended Platforms */}
-        <AnalysisSection icon={Monitor} title="Recommended Platforms">
+        <AnalysisSection icon={Monitor} title="推荐平台">
           <div className="space-y-2">
             {analysis.recommendedPlatforms.map((platform, i) => (
               <div

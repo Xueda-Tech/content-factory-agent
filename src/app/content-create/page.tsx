@@ -33,28 +33,28 @@ interface GenerateOptions {
 const PLATFORMS: { id: Platform; label: string; icon: React.ComponentType<{ className?: string }>; description: string }[] = [
   {
     id: "wechat",
-    label: "WeChat",
+    label: "微信",
     icon: MessageSquare,
-    description: "Long-form article for WeChat Official Account",
+    description: "微信公众号长文",
   },
   {
     id: "xiaohongshu",
-    label: "Xiaohongshu",
+    label: "小红书",
     icon: Camera,
-    description: "Short-form post with emojis and hashtags",
+    description: "带表情和标签的短文",
   },
   {
     id: "twitter",
     label: "Twitter / X",
     icon: Hash,
-    description: "Thread format (3-6 tweets)",
+    description: "长推文格式（3-6 条）",
   },
 ];
 
 const TONES: { id: Tone; label: string }[] = [
-  { id: "professional", label: "Professional" },
-  { id: "casual", label: "Casual" },
-  { id: "humorous", label: "Humorous" },
+  { id: "professional", label: "专业" },
+  { id: "casual", label: "轻松" },
+  { id: "humorous", label: "幽默" },
 ];
 
 export default function ContentCreatePage() {
@@ -74,7 +74,7 @@ export default function ContentCreatePage() {
 
   const handleGenerate = async () => {
     if (!topic.trim()) {
-      setError("Please enter a topic or brief.");
+      setError("请输入话题或简要描述。");
       return;
     }
 
@@ -99,7 +99,7 @@ export default function ContentCreatePage() {
       if (!response.ok) {
         const data = await response.json().catch(() => null);
         throw new Error(
-          data?.error ?? `Generation failed (${response.status})`
+          data?.error ?? `生成失败 (${response.status})`
         );
       }
 
@@ -107,7 +107,7 @@ export default function ContentCreatePage() {
       setGeneratedContent(data.content);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "An unexpected error occurred."
+        err instanceof Error ? err.message : "发生未知错误。"
       );
     } finally {
       setIsGenerating(false);
@@ -134,12 +134,11 @@ export default function ContentCreatePage() {
         <div className="flex items-center gap-2">
           <PenSquare className="size-5 text-blue-500" />
           <h1 className="text-2xl font-bold tracking-tight">
-            Content Creation
+            内容创作
           </h1>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Generate platform-optimized content for WeChat, Xiaohongshu, and
-          Twitter using AI.
+          用 AI 为微信、小红书和 Twitter 生成平台定制内容。
         </p>
       </div>
 
@@ -150,22 +149,21 @@ export default function ContentCreatePage() {
           {/* Topic input */}
           <Card>
             <CardHeader>
-              <CardTitle>Topic / Brief</CardTitle>
+              <CardTitle>话题 / 简要描述</CardTitle>
               <CardDescription>
-                Describe what you want to write about. Be as specific as you
-                like.
+                描述你想写的内容，越具体越好。
               </CardDescription>
             </CardHeader>
             <CardContent>
               <textarea
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="e.g. The rise of AI-powered content creation tools in China's social media landscape..."
+                placeholder="例如：AI 内容创作工具在中国社交媒体的崛起..."
                 className="min-h-[140px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
                 disabled={isGenerating}
               />
               <p className="mt-1.5 text-xs text-muted-foreground">
-                {topic.length} characters
+                {topic.length} 个字符
               </p>
             </CardContent>
           </Card>
@@ -173,9 +171,9 @@ export default function ContentCreatePage() {
           {/* Platform selector */}
           <Card>
             <CardHeader>
-              <CardTitle>Platform</CardTitle>
+              <CardTitle>平台</CardTitle>
               <CardDescription>
-                Select the target platform for your content.
+                选择内容的目标发布平台。
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -207,13 +205,13 @@ export default function ContentCreatePage() {
           {/* Options */}
           <Card>
             <CardHeader>
-              <CardTitle>Options</CardTitle>
+              <CardTitle>选项</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Word count slider */}
               <div>
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium">Word Count</label>
+                  <label className="text-sm font-medium">字数</label>
                   <span className="text-sm text-muted-foreground">
                     ~{options.wordCount}
                   </span>
@@ -241,7 +239,7 @@ export default function ContentCreatePage() {
 
               {/* Tone selector */}
               <div>
-                <label className="text-sm font-medium">Tone</label>
+                <label className="text-sm font-medium">风格</label>
                 <div className="mt-2 flex gap-2">
                   {TONES.map((t) => (
                     <button
@@ -274,12 +272,12 @@ export default function ContentCreatePage() {
             {isGenerating ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
-                Generating...
+                生成中...
               </>
             ) : (
               <>
                 <Sparkles className="size-4" />
-                Generate Content
+                生成内容
               </>
             )}
           </Button>
@@ -298,11 +296,11 @@ export default function ContentCreatePage() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Generated Content</CardTitle>
+                  <CardTitle>生成结果</CardTitle>
                   <CardDescription>
                     {generatedContent
-                      ? "Preview your generated content below."
-                      : "Your generated content will appear here."}
+                      ? "以下是 AI 生成的内容预览。"
+                      : "生成的内容将显示在这里。"}
                   </CardDescription>
                 </div>
                 {generatedContent && (
@@ -314,12 +312,12 @@ export default function ContentCreatePage() {
                     {copied ? (
                       <>
                         <Check className="size-3.5" />
-                        Copied
+                        已复制
                       </>
                     ) : (
                       <>
                         <Copy className="size-3.5" />
-                        Copy
+                        复制
                       </>
                     )}
                   </Button>
@@ -331,10 +329,10 @@ export default function ContentCreatePage() {
                 <div className="flex min-h-[300px] flex-col items-center justify-center gap-3">
                   <Loader2 className="size-8 animate-spin text-muted-foreground" />
                   <p className="text-sm text-muted-foreground">
-                    Generating content for {selectedPlatform?.label}...
+                    正在为{selectedPlatform?.label}生成内容...
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    This may take a moment.
+                    请稍候。
                   </p>
                 </div>
               ) : generatedContent ? (
@@ -347,7 +345,7 @@ export default function ContentCreatePage() {
                 <div className="flex min-h-[300px] flex-col items-center justify-center gap-3 text-muted-foreground">
                   <Sparkles className="size-10 opacity-30" />
                   <p className="text-sm">
-                    Enter a topic and click Generate to get started.
+                    输入话题并点击「生成内容」开始。
                   </p>
                 </div>
               )}

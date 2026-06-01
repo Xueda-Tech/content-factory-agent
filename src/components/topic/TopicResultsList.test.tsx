@@ -10,19 +10,19 @@ describe("TopicResultsList", () => {
   it("renders empty state when results array is empty", () => {
     render(<TopicResultsList results={[]} />);
 
-    expect(screen.getByText(/no results yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/暂无结果/)).toBeInTheDocument();
   });
 
   it("empty state contains helpful guidance text", () => {
     render(<TopicResultsList results={[]} />);
 
-    expect(screen.getByText(/try searching for a topic above/i)).toBeInTheDocument();
+    expect(screen.getByText(/请在上方搜索话题/)).toBeInTheDocument();
   });
 
   it("does not render result count when results are empty", () => {
     render(<TopicResultsList results={[]} />);
 
-    expect(screen.queryByText(/result.*found/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/条结果/)).not.toBeInTheDocument();
   });
 
   // --- Result count ---
@@ -30,13 +30,13 @@ describe("TopicResultsList", () => {
   it("renders singular 'result' count for one result", () => {
     render(<TopicResultsList results={[MOCK_RESULTS[0]]} />);
 
-    expect(screen.getByText("1 result found")).toBeInTheDocument();
+    expect(screen.getByText("找到 1 条结果")).toBeInTheDocument();
   });
 
   it("renders plural 'results' count for multiple results", () => {
     render(<TopicResultsList results={MOCK_RESULTS} />);
 
-    expect(screen.getByText(`${MOCK_RESULTS.length} results found`)).toBeInTheDocument();
+    expect(screen.getByText(`找到 ${MOCK_RESULTS.length} 条结果`)).toBeInTheDocument();
   });
 
   // --- Result cards rendering ---

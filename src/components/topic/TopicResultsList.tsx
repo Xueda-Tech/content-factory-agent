@@ -85,7 +85,7 @@ export function TopicResultsList({
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <p className="text-sm text-muted-foreground">
-          No results yet. Try searching for a topic above.
+          暂无结果，请在上方搜索话题。
         </p>
       </div>
     );
@@ -94,7 +94,7 @@ export function TopicResultsList({
   return (
     <div className="space-y-3">
       <p className="text-xs text-muted-foreground">
-        {results.length} result{results.length !== 1 ? "s" : ""} found
+        找到 {results.length} 条结果
       </p>
       {results.map((result) => (
         <ResultCard

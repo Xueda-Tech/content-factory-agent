@@ -10,22 +10,22 @@ describe("TopicAnalysisPanel", () => {
     render(<TopicAnalysisPanel analysis={null} />);
 
     expect(
-      screen.getByText(/select a topic result to view ai-powered analysis/i)
+      screen.getByText(/选择一条话题结果/)
     ).toBeInTheDocument();
   });
 
   it("renders 'AI Analysis' title in placeholder state", () => {
     render(<TopicAnalysisPanel analysis={null} />);
 
-    expect(screen.getByText("AI Analysis")).toBeInTheDocument();
+    expect(screen.getByText("AI 分析")).toBeInTheDocument();
   });
 
   it("does not render any sections when analysis is null", () => {
     render(<TopicAnalysisPanel analysis={null} />);
 
-    expect(screen.queryByText("Key Insights")).not.toBeInTheDocument();
-    expect(screen.queryByText("Content Angles")).not.toBeInTheDocument();
-    expect(screen.queryByText("Recommended Platforms")).not.toBeInTheDocument();
+    expect(screen.queryByText("核心洞察")).not.toBeInTheDocument();
+    expect(screen.queryByText("内容角度")).not.toBeInTheDocument();
+    expect(screen.queryByText("推荐平台")).not.toBeInTheDocument();
   });
 
   // --- With analysis data ---
@@ -39,7 +39,7 @@ describe("TopicAnalysisPanel", () => {
   it("renders 'AI Analysis' title when analysis is provided", () => {
     render(<TopicAnalysisPanel analysis={MOCK_ANALYSIS} />);
 
-    expect(screen.getByText("AI Analysis")).toBeInTheDocument();
+    expect(screen.getByText("AI 分析")).toBeInTheDocument();
   });
 
   // --- Section headers ---
@@ -47,19 +47,19 @@ describe("TopicAnalysisPanel", () => {
   it("renders 'Key Insights' section header", () => {
     render(<TopicAnalysisPanel analysis={MOCK_ANALYSIS} />);
 
-    expect(screen.getByText("Key Insights")).toBeInTheDocument();
+    expect(screen.getByText("核心洞察")).toBeInTheDocument();
   });
 
   it("renders 'Content Angles' section header", () => {
     render(<TopicAnalysisPanel analysis={MOCK_ANALYSIS} />);
 
-    expect(screen.getByText("Content Angles")).toBeInTheDocument();
+    expect(screen.getByText("内容角度")).toBeInTheDocument();
   });
 
   it("renders 'Recommended Platforms' section header", () => {
     render(<TopicAnalysisPanel analysis={MOCK_ANALYSIS} />);
 
-    expect(screen.getByText("Recommended Platforms")).toBeInTheDocument();
+    expect(screen.getByText("推荐平台")).toBeInTheDocument();
   });
 
   // --- Key Insights ---
@@ -138,9 +138,9 @@ describe("TopicAnalysisPanel", () => {
     render(<TopicAnalysisPanel analysis={emptyAnalysis} />);
 
     expect(screen.getByText("A brief summary")).toBeInTheDocument();
-    expect(screen.getByText("Key Insights")).toBeInTheDocument();
-    expect(screen.getByText("Content Angles")).toBeInTheDocument();
-    expect(screen.getByText("Recommended Platforms")).toBeInTheDocument();
+    expect(screen.getByText("核心洞察")).toBeInTheDocument();
+    expect(screen.getByText("内容角度")).toBeInTheDocument();
+    expect(screen.getByText("推荐平台")).toBeInTheDocument();
   });
 
   it("renders correctly with a single item in each array", () => {
@@ -164,9 +164,9 @@ describe("TopicAnalysisPanel", () => {
   it("section headers are rendered as h3 elements", () => {
     render(<TopicAnalysisPanel analysis={MOCK_ANALYSIS} />);
 
-    const keyInsights = screen.getByRole("heading", { name: "Key Insights" });
-    const contentAngles = screen.getByRole("heading", { name: "Content Angles" });
-    const platforms = screen.getByRole("heading", { name: "Recommended Platforms" });
+    const keyInsights = screen.getByRole("heading", { name: "核心洞察" });
+    const contentAngles = screen.getByRole("heading", { name: "内容角度" });
+    const platforms = screen.getByRole("heading", { name: "推荐平台" });
 
     expect(keyInsights.tagName).toBe("H3");
     expect(contentAngles.tagName).toBe("H3");

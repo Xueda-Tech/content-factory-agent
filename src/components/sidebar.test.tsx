@@ -32,10 +32,10 @@ describe("Sidebar", () => {
 
   // --- Brand ---
 
-  it("renders the 'Content Factory' brand text", () => {
+  it("renders the '内容工厂' brand text", () => {
     render(<Sidebar />);
 
-    expect(screen.getByText("Content Factory")).toBeInTheDocument();
+    expect(screen.getByText("内容工厂")).toBeInTheDocument();
   });
 
   // --- Navigation links ---
@@ -43,37 +43,37 @@ describe("Sidebar", () => {
   it("renders all four navigation links", () => {
     render(<Sidebar />);
 
-    expect(screen.getByText("Dashboard")).toBeInTheDocument();
-    expect(screen.getByText("Topic Insight")).toBeInTheDocument();
-    expect(screen.getByText("Content Creation")).toBeInTheDocument();
-    expect(screen.getByText("Quick Publish")).toBeInTheDocument();
+    expect(screen.getByText("控制面板")).toBeInTheDocument();
+    expect(screen.getByText("话题洞察")).toBeInTheDocument();
+    expect(screen.getByText("内容创作")).toBeInTheDocument();
+    expect(screen.getByText("快速发布")).toBeInTheDocument();
   });
 
   it("Dashboard link points to '/'", () => {
     render(<Sidebar />);
 
-    const dashboardLink = screen.getByText("Dashboard").closest("a");
+    const dashboardLink = screen.getByText("控制面板").closest("a");
     expect(dashboardLink).toHaveAttribute("href", "/");
   });
 
   it("Topic Insight link points to '/topic-insight'", () => {
     render(<Sidebar />);
 
-    const link = screen.getByText("Topic Insight").closest("a");
+    const link = screen.getByText("话题洞察").closest("a");
     expect(link).toHaveAttribute("href", "/topic-insight");
   });
 
   it("Content Creation link points to '/content-create'", () => {
     render(<Sidebar />);
 
-    const link = screen.getByText("Content Creation").closest("a");
+    const link = screen.getByText("内容创作").closest("a");
     expect(link).toHaveAttribute("href", "/content-create");
   });
 
   it("Quick Publish link points to '/publish'", () => {
     render(<Sidebar />);
 
-    const link = screen.getByText("Quick Publish").closest("a");
+    const link = screen.getByText("快速发布").closest("a");
     expect(link).toHaveAttribute("href", "/publish");
   });
 
@@ -87,7 +87,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/");
     render(<Sidebar />);
 
-    const dashboardLink = screen.getByText("Dashboard").closest("a");
+    const dashboardLink = screen.getByText("控制面板").closest("a");
     expect(isActive(dashboardLink)).toBe(true);
   });
 
@@ -95,7 +95,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/topic-insight");
     render(<Sidebar />);
 
-    const dashboardLink = screen.getByText("Dashboard").closest("a");
+    const dashboardLink = screen.getByText("控制面板").closest("a");
     expect(dashboardLink?.className).toContain("text-sidebar-foreground/70");
     expect(isActive(dashboardLink)).toBe(false);
   });
@@ -104,7 +104,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/topic-insight");
     render(<Sidebar />);
 
-    const link = screen.getByText("Topic Insight").closest("a");
+    const link = screen.getByText("话题洞察").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -112,7 +112,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/content-create");
     render(<Sidebar />);
 
-    const link = screen.getByText("Content Creation").closest("a");
+    const link = screen.getByText("内容创作").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -120,7 +120,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/publish");
     render(<Sidebar />);
 
-    const link = screen.getByText("Quick Publish").closest("a");
+    const link = screen.getByText("快速发布").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -130,7 +130,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/dashboard");
     render(<Sidebar />);
 
-    const dashboardLink = screen.getByText("Dashboard").closest("a");
+    const dashboardLink = screen.getByText("控制面板").closest("a");
     expect(isActive(dashboardLink)).toBe(false);
   });
 
@@ -138,7 +138,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/anything");
     render(<Sidebar />);
 
-    const dashboardLink = screen.getByText("Dashboard").closest("a");
+    const dashboardLink = screen.getByText("控制面板").closest("a");
     expect(isActive(dashboardLink)).toBe(false);
   });
 
@@ -148,7 +148,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/topic-insight/something");
     render(<Sidebar />);
 
-    const link = screen.getByText("Topic Insight").closest("a");
+    const link = screen.getByText("话题洞察").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -156,7 +156,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/content-create/123");
     render(<Sidebar />);
 
-    const link = screen.getByText("Content Creation").closest("a");
+    const link = screen.getByText("内容创作").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -164,7 +164,7 @@ describe("Sidebar", () => {
     mockUsePathname.mockReturnValue("/publish/new");
     render(<Sidebar />);
 
-    const link = screen.getByText("Quick Publish").closest("a");
+    const link = screen.getByText("快速发布").closest("a");
     expect(isActive(link)).toBe(true);
   });
 
@@ -175,9 +175,9 @@ describe("Sidebar", () => {
     render(<Sidebar />);
 
     // Dashboard, Content Creation, Quick Publish should all be inactive
-    const dashboard = screen.getByText("Dashboard").closest("a");
-    const contentCreation = screen.getByText("Content Creation").closest("a");
-    const quickPublish = screen.getByText("Quick Publish").closest("a");
+    const dashboard = screen.getByText("控制面板").closest("a");
+    const contentCreation = screen.getByText("内容创作").closest("a");
+    const quickPublish = screen.getByText("快速发布").closest("a");
 
     expect(dashboard?.className).toContain("text-sidebar-foreground/70");
     expect(isActive(dashboard)).toBe(false);
@@ -200,7 +200,7 @@ describe("Sidebar", () => {
 
     // Only Content Creation should be active
     expect(activeLinks.length).toBe(1);
-    expect(activeLinks[0]).toHaveTextContent("Content Creation");
+    expect(activeLinks[0]).toHaveTextContent("内容创作");
   });
 
   // --- Accessibility ---

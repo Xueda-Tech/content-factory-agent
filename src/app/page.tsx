@@ -30,25 +30,25 @@ interface ModuleCard {
 
 const MODULES: ModuleCard[] = [
   {
-    title: "Topic Insight",
+    title: "话题洞察",
     description:
-      "Discover trending topics from WeChat and Xiaohongshu. Get AI-powered analysis and recommendations.",
+      "从微信和小红书发现热点话题，获取 AI 分析与推荐。",
     href: "/topic-insight",
     icon: Lightbulb,
     color: "text-amber-500",
   },
   {
-    title: "Content Creation",
+    title: "内容创作",
     description:
-      "Generate platform-tailored content with AI. Edit and refine before publishing.",
+      "用 AI 生成平台定制内容，编辑润色后一键发布。",
     href: "/content-create",
     icon: PenSquare,
     color: "text-blue-500",
   },
   {
-    title: "Quick Publish",
+    title: "快速发布",
     description:
-      "Publish your content to WeChat, Xiaohongshu, and Twitter in one click.",
+      "一键将内容发布到微信公众号、小红书和 Twitter。",
     href: "/publish",
     icon: Send,
     color: "text-emerald-500",
@@ -85,9 +85,9 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { label: "Topics Collected", value: "0", icon: Lightbulb },
-  { label: "Content Pieces", value: "0", icon: FileText },
-  { label: "Published", value: "0", icon: TrendingUp },
+  { label: "已采集话题", value: "0", icon: Lightbulb },
+  { label: "已生成内容", value: "0", icon: FileText },
+  { label: "已发布", value: "0", icon: TrendingUp },
 ];
 
 function StatCard({ stat }: { stat: StatItem }) {
@@ -113,9 +113,9 @@ export default function HomePage() {
     <div className="mx-auto max-w-5xl space-y-8 px-6 py-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight">控制面板</h1>
         <p className="text-muted-foreground">
-          Welcome to Content Factory. Pick a module to get started.
+          欢迎使用内容工厂，选择一个模块开始工作。
         </p>
       </div>
 
@@ -128,7 +128,7 @@ export default function HomePage() {
 
       {/* Module quick-access */}
       <div>
-        <h2 className="mb-4 text-lg font-semibold">Modules</h2>
+        <h2 className="mb-4 text-lg font-semibold">功能模块</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           {MODULES.map((mod) => (
             <ModuleCardLink key={mod.href} module={mod} />
@@ -141,14 +141,14 @@ export default function HomePage() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Clock className="size-4 text-muted-foreground" />
-            <CardTitle className="text-base">Recent Activity</CardTitle>
+            <CardTitle className="text-base">最近动态</CardTitle>
           </div>
           <CardDescription>
-            Your latest actions will appear here once you start creating content.
+            开始创作内容后，你的操作记录将显示在这里。
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">No activity yet.</p>
+          <p className="text-sm text-muted-foreground">暂无动态。</p>
         </CardContent>
       </Card>
     </div>

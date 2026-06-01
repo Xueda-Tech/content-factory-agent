@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import type { SourceFilter } from "./types";
 
 const FILTERS: { label: string; value: SourceFilter }[] = [
-  { label: "All", value: "all" },
-  { label: "WeChat", value: "wechat" },
-  { label: "Xiaohongshu", value: "xiaohongshu" },
+  { label: "全部", value: "all" },
+  { label: "微信", value: "wechat" },
+  { label: "小红书", value: "xiaohongshu" },
 ];
 
 interface TopicSearchBarProps {
@@ -32,7 +32,7 @@ export function TopicSearchBar({ onSearch }: TopicSearchBarProps) {
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Search topics, keywords, or URLs..."
+          placeholder="搜索话题、关键词或链接..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="h-9 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -60,7 +60,7 @@ export function TopicSearchBar({ onSearch }: TopicSearchBarProps) {
 
       {/* Search button */}
       <Button type="submit" size="sm">
-        Search
+        搜索
       </Button>
     </form>
   );
