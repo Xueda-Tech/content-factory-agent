@@ -56,24 +56,43 @@ src/
 ├── app/
 │   ├── favicon.ico
 │   ├── globals.css
-│   ├── layout.tsx          # Root layout with sidebar + Geist fonts
-│   ├── page.tsx            # Dashboard home page
-│   └── topic-insight/
-│       └── page.tsx        # Topic Insight page (search + results + analysis)
+│   ├── layout.tsx                  # Root layout with sidebar + Geist fonts
+│   ├── page.tsx                    # Dashboard home page
+│   ├── topic-insight/
+│   │   └── page.tsx                # Topic Insight page (search + results + analysis)
+│   ├── content-create/
+│   │   └── page.tsx                # Content Creation page (input + generation + editor)
+│   ├── publish/
+│   │   └── page.tsx                # Quick Publish page (WeChat + Xiaohongshu)
+│   └── api/
+│       ├── topic/
+│       │   └── analyze/
+│       │       └── route.ts        # POST /api/topic/analyze — AI topic analysis
+│       ├── content/
+│       │   └── generate/
+│       │       └── route.ts        # POST /api/content/generate — AI content generation
+│       └── publish/
+│           └── wechat/
+│               └── route.ts        # POST /api/publish/wechat — WeChat publishing
 ├── components/
-│   ├── sidebar.tsx         # Sidebar navigation (client component)
+│   ├── sidebar.tsx                 # Sidebar navigation (client component)
 │   ├── topic/
 │   │   ├── TopicAnalysisPanel.tsx  # AI analysis display panel
 │   │   ├── TopicResultsList.tsx    # Search results list
 │   │   ├── TopicSearchBar.tsx      # Search input with source filter
-│   │   └── types.ts        # Topic types, interfaces, mock data
+│   │   └── types.ts                # Topic types, interfaces, mock data
+│   ├── content/
+│   │   └── MarkdownEditor.tsx      # Markdown editor (@uiw/react-md-editor wrapper)
 │   └── ui/
-│       ├── button.tsx      # shadcn/ui Button
-│       └── card.tsx        # shadcn/ui Card
+│       ├── button.tsx              # shadcn/ui Button
+│       ├── card.tsx                # shadcn/ui Card
+│       └── loading-spinner.tsx     # Reusable loading spinner
 └── lib/
-    ├── ai.ts               # SiliconFlow AI wrapper (analyze + generate)
-    ├── db.ts               # SQLite connection, migrations, schema
-    └── utils.ts            # Tailwind merge utility (cn)
+    ├── ai.ts                       # SiliconFlow AI wrapper (analyze + generate)
+    ├── api-clients.ts              # dajiala.com WeChat article collection client
+    ├── db.ts                       # SQLite connection, migrations, schema
+    ├── publish.ts                  # Platform publishing clients
+    └── utils.ts                    # Tailwind merge utility (cn)
 ```
 
 ### Database Schema
