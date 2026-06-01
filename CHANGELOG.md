@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Nothing yet.
+
+### Changed
+
+- Nothing yet.
+
+### Deprecated
+
+- Nothing yet.
+
+### Removed
+
+- Nothing yet.
+
+### Fixed
+
+- Nothing yet.
+
+### Security
+
+- Nothing yet.
+
+## [0.2.0] - 2026-06-01
+
+### Added
+
 - Next.js 16 project scaffold with TypeScript (strict mode) and App Router.
 - Tailwind CSS v4 with PostCSS integration.
 - shadcn/ui design system (base-nova style) with Button and Card components.
@@ -55,10 +81,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Optional "Reset to original" action.
   - Dynamic import to avoid SSR issues.
   - Controlled component with `value` / `onChange` props.
+- Xiaohongshu publish client (`src/lib/publish.ts`) with:
+  - `publishToXhs()` — publish notes to Xiaohongshu with retry logic.
+  - `getPublishHistory()` — query recent publish history from the database.
+  - `getContentById()` — look up content pieces by ID.
+- WeChat publish endpoint (`/api/publish/wechat`) with:
+  - Content lookup by `contentId` when `content` is not provided directly.
+  - Publish history recording with status tracking (pending → success/failed).
+  - Integration with `wx.limyai.com` publish API.
+- Content list endpoint (`GET /api/content/list`) for retrieving all content pieces.
+- Publish history endpoint (`GET /api/publish/history`) with configurable limit.
 - Test infrastructure with Vitest and React Testing Library:
   - Vitest configuration with jsdom environment.
   - Test setup with `@testing-library/jest-dom` matchers.
   - Smoke tests verifying infrastructure works.
+  - Database module tests with in-memory SQLite covering migrations, schema, and singleton lifecycle.
 
 ### Changed
 
