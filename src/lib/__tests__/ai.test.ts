@@ -85,7 +85,7 @@ describe("AI error classes", () => {
 
   it("AIResponseError sets name and cause", async () => {
     vi.resetModules();
-    const { AIResponseError } = await import("../ai");
+    const { AIError, AIResponseError } = await import("../ai");
     const cause = new SyntaxError("bad json");
     const err = new AIResponseError("parse failed", cause);
 
@@ -98,7 +98,7 @@ describe("AI error classes", () => {
 
   it("AIRequestError sets name and cause", async () => {
     vi.resetModules();
-    const { AIRequestError } = await import("../ai");
+    const { AIError, AIRequestError } = await import("../ai");
     const cause = new Error("timeout");
     const err = new AIRequestError("timed out", cause);
 
